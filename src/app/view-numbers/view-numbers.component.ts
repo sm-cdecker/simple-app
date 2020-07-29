@@ -7,21 +7,17 @@ import { Router } from '@angular/router';
   templateUrl: './view-numbers.component.html'
 })
 export class ViewNumbersComponent implements OnInit {
-  public displayedColumns: Array<string> = [
-    'Input',
-    'Output',
-    'Created On'
-  ];
+
   constructor(public numberSvc: NumberService, private router: Router) {}
 
   public clearEntries(): void {
     this.numberSvc.clearNumbers();
-    this.router.navigateByUrl('add');
+    this.router.navigateByUrl('home');
   }
 
   ngOnInit(): void {
     if (this.numberSvc.numberList.length === 0) {
-      this.router.navigateByUrl('add');
+      this.router.navigateByUrl('home');
     }
   }
 }

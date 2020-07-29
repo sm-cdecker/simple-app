@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { FormattedNumber, Shorthand } from '../models';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
@@ -11,29 +10,33 @@ export class NumberService {
 
   public numberList: Array<FormattedNumber> = [];
 
+  // written in a way that is theoretically expandable
   public shorthands: Array<Shorthand> = [
-
-    // thousand
-    {
+    { // thousand
       character: 'k',
       multiplier: 1000
     },
-    // million
-    {
+    { // million
       character: 'm',
       multiplier: 1000000
     },
-    // million
-    {
+    { // billion
       character: 'b',
       multiplier: 1000000000
     },
-    // trillion
-    {
+    { // trillion
       character: 't',
       multiplier: 1000000000000
     }
   ];
+
+  public get regexPattern(): RegExp {
+    return new RegExp(`^\\d+[${ this.shortHandChars }]?$`, 'i');
+  }
+
+  private get shortHandChars(): string {
+    return this.shorthands.map(x => x.character).join('');
+  }
 
   constructor() {
     const storedList = window.localStorage.getItem(this.LOCALSTORE_KEY);
@@ -55,14 +58,6 @@ export class NumberService {
   public clearNumbers(): void {
     this.numberList = [];
     window.localStorage.removeItem(this.LOCALSTORE_KEY);
-  }
-
-  public get regexPattern(): RegExp {
-    return new RegExp(`^\\d+[${ this.shortHandChars }]?$`, 'i');
-  }
-
-  private get shortHandChars(): string {
-    return this.shorthands.map(x => x.character).join('');
   }
 
   private getOutput(input: string): number {
