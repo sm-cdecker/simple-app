@@ -1,16 +1,23 @@
 import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterTestingModule, setupTestingRouter } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { Router,  } from '@angular/router';
+import { AppRoutes } from './app-routing.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule.withRoutes(AppRoutes)
       ],
       declarations: [
         AppComponent
       ],
+      providers: [{
+          provide: Router,
+          useFactory: setupTestingRouter
+        }
+      ]
     }).compileComponents();
   }));
 

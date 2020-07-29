@@ -1,27 +1,40 @@
 
-import { Router } from '@angular/router';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 
 import { NumberService } from '../services/number.service';
 import { AppModule } from '../app.module';
 
 import { AddNumberComponent } from './add-number.component';
 import { DebugElement } from '@angular/core';
+import { AppRoutes } from '../app-routing.module';
+import { RouterTestingModule, setupTestingRouter } from '@angular/router/testing';
+import { Router } from '@angular/router';
+import { AppComponent } from '../app.component';
 
 describe('InputTest', () => {
-  let router: Router;
   let fixture: ComponentFixture<AddNumberComponent>;
   let submitEl: DebugElement;
 
   beforeEach(() => {
-
+    beforeEach(async(() => {
       TestBed.configureTestingModule({
-          imports: [ AppModule ],
+        imports: [
+          RouterTestingModule.withRoutes(AppRoutes)
+        ],
+        declarations: [
+          AppComponent,
+          AddNumberComponent
+        ],
+        providers: [{
+            provide: Router,
+            useFactory: setupTestingRouter
+          }
+        ]
       }).compileComponents();
+    }));
 
-      fixture = TestBed.createComponent(AddNumberComponent);
-      router = TestBed.inject(Router);
-      submitEl = fixture.debugElement;
+    fixture = TestBed.createComponent(AddNumberComponent);
+    submitEl = fixture.debugElement;
 
   });
 

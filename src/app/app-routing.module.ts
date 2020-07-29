@@ -5,7 +5,7 @@ import { AddNumberComponent } from './add-number/add-number.component';
 import { HomeComponent } from './home/home.component';
 import { ViewNumbersComponent } from './view-numbers/view-numbers.component';
 
-const routes: Routes = [
+export const AppRoutes: Routes = [
   {
     path: '',
     component: HomeComponent
@@ -21,7 +21,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(AppRoutes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
