@@ -1,0 +1,14 @@
+<div class="view-body">
+  <table class="mat-elevation-z8 mat-table">
+    <tr class="mat-header-row">
+      <th>Input</th>
+      <th>Output</th>
+      <th>Created On</th>
+    </tr>
+    <tr class="mat-row" *ngFor="let number of numberSvc.numberList">
+      <td>{{ number.originalValue }}</td>
+      <td>{{ number.output | currency: '' : '': '1.0-0'}}</td>
+      <td>{{ number.createDate }}</td>
+    </tr>
+  </table>
+</div>

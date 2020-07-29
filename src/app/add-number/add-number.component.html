@@ -1,0 +1,18 @@
+<form class="example-form" [formGroup]="numberForm" autocomplete="off">
+  <mat-form-field class="example-full-width">
+    <mat-label>Please enter a number</mat-label>
+    <input
+      matInput
+      formControlName="newNumber"
+      [errorStateMatcher]="matcher"
+      type="text">
+  </mat-form-field>
+  <mat-error *ngIf="numberForm.controls.newNumber.hasError('pattern') && !numberForm.controls.newNumber.hasError('required')">
+    Please enter a valid value
+  </mat-error>
+  <mat-error *ngIf="numberForm.controls.newNumber.hasError('required')">
+    A value is required
+  </mat-error>
+  <br>
+  <button mat-raised-button [disabled]="!numberForm.valid" (click)="addAndRedirect()">Submit</button>
+</form>
