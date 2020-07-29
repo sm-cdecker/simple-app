@@ -1,5 +1,5 @@
-<form class="example-form" [formGroup]="numberForm" autocomplete="off">
-  <mat-form-field class="example-full-width">
+<form class="simple-form" [formGroup]="numberForm" autocomplete="off">
+  <mat-form-field class="simple-full-width">
     <mat-label>Please enter a number</mat-label>
     <input
       matInput
@@ -7,6 +7,7 @@
       [errorStateMatcher]="matcher"
       type="text">
   </mat-form-field>
+  <mat-hint>You can append a numerical shorthand like k for thousand</mat-hint>
   <mat-error *ngIf="numberForm.controls.newNumber.hasError('pattern') && !numberForm.controls.newNumber.hasError('required')">
     Please enter a valid value
   </mat-error>

@@ -14,6 +14,11 @@ export class ViewNumbersComponent implements OnInit {
   ];
   constructor(public numberSvc: NumberService, private router: Router) {}
 
+  public clearEntries(): void {
+    this.numberSvc.clearNumbers();
+    this.router.navigateByUrl('add');
+  }
+
   ngOnInit(): void {
     if (this.numberSvc.numberList.length === 0) {
       this.router.navigateByUrl('add');

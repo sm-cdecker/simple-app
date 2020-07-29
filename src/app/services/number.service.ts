@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { FormattedNumber, Shorthand } from '../models';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NumberService {
+  private LOCALSTORE_KEY: string = 'storedNumbers';
+
   public numberList: Array<FormattedNumber> = [];
 
   public shorthands: Array<Shorthand> = [
@@ -32,6 +35,13 @@ export class NumberService {
     }
   ];
 
+  constructor() {
+    const storedList = window.localStorage.getItem(this.LOCALSTORE_KEY);
+    if (!!storedList) {
+      this.numberList = JSON.parse(storedList);
+    }
+  }
+
   public addNumber(input: string): void {
     // create object here
     this.numberList.push({
@@ -39,6 +49,12 @@ export class NumberService {
       output: this.getOutput(input),
       createDate: new Date()
     });
+    window.localStorage.setItem(this.LOCALSTORE_KEY, JSON.stringify(this.numberList));
+  }
+
+  public clearNumbers(): void {
+    this.numberList = [];
+    window.localStorage.removeItem(this.LOCALSTORE_KEY);
   }
 
   public get regexPattern(): RegExp {
@@ -52,9 +68,15 @@ export class NumberService {
   private getOutput(input: string): number {
     // getting the right 'shorthand'
     const shorthand: Shorthand = this.shorthands.find(s => input.toLowerCase().includes(s.character.toLowerCase()));
-    // getting the raw numerical value
-    const num = +(input.toLowerCase().replace(shorthand.character, ''));
 
-    return num * shorthand.multiplier;
+    if (!!shorthand) {
+      // getting the raw numerical value
+      const num = +(input.toLowerCase().replace(shorthand.character, ''));
+
+      return num * shorthand.multiplier;
+
+    }
+
+    return +input;
   }
 }

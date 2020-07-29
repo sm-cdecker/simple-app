@@ -22,18 +22,15 @@ export class AddNumberComponent {
   public matcher = new MyErrorStateMatcher();
 
   constructor(private router: Router, private numberSvc: NumberService) {
-    console.dir(this.numberSvc.regexPattern);
-    console.dir(this.numberSvc.regexPattern.test('123b'));
-    console.dir(this.numberSvc.regexPattern.test('123'));
 
     this.numberForm = new FormGroup({
-    newNumber: new FormControl(
-      '',
-      [
-        Validators.required,
-        Validators.pattern(this.numberSvc.regexPattern)
-      ])
-    });
+      newNumber: new FormControl(
+        '',
+        [
+          Validators.required,
+          Validators.pattern(this.numberSvc.regexPattern)
+        ])
+      });
   }
 
   public addAndRedirect(): void {
