@@ -31,7 +31,7 @@ export class NumberService {
   ];
 
   public get regexPattern(): RegExp {
-    return new RegExp(`^\\d+[${ this.shortHandChars }]?$`, 'i');
+    return new RegExp(`^\\d+(.\\d+)?[${ this.shortHandChars }]?$`, 'i');
   }
 
   private get shortHandChars(): string {
